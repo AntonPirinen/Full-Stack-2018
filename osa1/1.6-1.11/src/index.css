@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2{
+  text-align: left;
+}
+
+div.stats {
+  margin: 50px;
+  width: 200px;
+  text-align: center;
+}
+
+div.stats p{
+  text-align: left;
+}
+
+div.buttons {
+  text-align: center;
+}
+
+div.buttons button {
+  margin: 20px;
+  height: 30px;
+  width: 100px;
+}
+

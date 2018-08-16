@@ -12,16 +12,6 @@ h2{
   text-align: left;
 }
 
-div.stats {
-  margin: 50px;
-  width: 200px;
-  text-align: center;
-}
-
-div.stats p{
-  text-align: left;
-}
-
 div.buttons {
   text-align: center;
 }

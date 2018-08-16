@@ -2,58 +2,67 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const Header = ({ title }) => {
+const Header = ({ header }) => {
     return (
         <header>
-            <h1>{title}</h1>  
+            <h1>{header}</h1>  
         </header>
     )
 }
 
-const Statistiikka = (props) => {
-    //console.log(props.state.hyva)
-
-    const positiivisia = () => {
-        if (props.state.palautteita === 0) {
-            return (
-                0
-            )
-        }
+const Statistics = (props) => {
+    if(props.state.palautteita === 0) {
         return (
-            props.state.hyva / props.state.palautteita * 100
-        )
-    }
-    
-    const keskiarvo = () => {
-        if (props.state.palautteita === 0) {
-            return (
-                0
-            )
-        }
-        if (props.state.palautteita === 1) {
-            return (
-                1
-            )
-        }
-        return (
-            (props.state.hyva - props.state.huono) / props.state.palautteita
+        <div>
+            <h2>Statistiikka</h2>
+            <p>ei yhtään palautetta annettu</p>
+        </div>
         )
     }
 
     return (
         <div>
             <h2>Statistiikka</h2>
-            <p>Hyvä {props.state.hyva}</p>
-            <p>Neutraali {props.state.neutraali}</p>
-            <p>Huono {props.state.huono}</p>
-            <p>Keskiarvo {keskiarvo()}</p>
-            <p>Positiivisia {positiivisia()} %</p>
+            <table>
+                <tbody>
+                    <Statistic state = {props.state} operation = 'hyva' arvo = {props.state.hyva}/>
+                    <Statistic state = {props.state} operation = 'neutraali' arvo = {props.state.neutraali}/>
+                    <Statistic state = {props.state} operation = 'huono' arvo = {props.state.huono}/>
+                    <Statistic state = {props.state} operation = 'positiivisia' arvo = {0} yksikko = ' %'/>
+                    <Statistic state = {props.state} operation = 'keskiarvo' arvo = {0}/>
+                </tbody>
+            </table>
         </div>
+    )
+}   
+
+const Statistic = (props) => {
+    let value = props.arvo
+
+    if (props.operation === 'positiivisia') {
+        value = props.state.hyva / props.state.palautteita * 100 + props.yksikko
+    }
+
+    if (props.operation === 'keskiarvo') {
+        if (props.state.palautteita === 1) {
+            value = 1
+        }
+        value = (props.state.hyva - props.state.huono) / props.state.palautteita
+    }
+
+    return (
+        <tr>
+        <td>{props.operation}</td>
+        <td>{value}</td>
+        </tr>
     )
 }
 
-class App extends React.Component {
+const Button = (props) => {
+    return <button onClick = {props.handler}>{props.label}</button>
+}
 
+class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -64,42 +73,25 @@ class App extends React.Component {
         }
     }
 
-    lisaaHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1,
-            palautteita: this.state.palautteita + 1,
-            summa: this.state.summa + 1,
-        })
-        //console.log(this.state.hyva)
-    }
-
-    lisaaNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1,
-            palautteita: this.state.palautteita + 1,
-        })
-    }
-
-    lisaaHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1,
-            palautteita: this.state.palautteita + 1,
-            summa: this.state.summa - 1,
-        })
+    lisaa = (type) => {
+        return () => {
+            this.setState({
+                [type]: this.state[type] + 1,
+                palautteita: this.state.palautteita +1
+            })
+        }
     }
 
     render() {
         return (
             <div>
-                <Header title = 'Anna palautetta'/>
+                <Header header = 'Anna palautetta'/>
                 <div className = 'buttons'>
-                    <button onClick = {this.lisaaHyva}>Hyvä</button>
-                    <button onClick = {this.lisaaNeutraali}>Neutraali</button>
-                    <button onClick = {this.lisaaHuono}>Huono</button>
+                    <Button handler = {this.lisaa('hyva')} label = 'Hyvä'/>
+                    <Button handler = {this.lisaa('neutraali')} label = 'Neutraali'/>
+                    <Button handler = {this.lisaa('huono')} label = 'Huono'/>
                 </div>
-                <div className = 'stats'>
-                    <Statistiikka state = {this.state}/>
-                </div>
+                <Statistics state = {this.state}/>
             </div> 
         )
     }

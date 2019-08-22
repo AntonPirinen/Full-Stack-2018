@@ -1,13 +1,17 @@
 import React from 'react'
 import Person from './Person'
+ 
+ 
+ // muodostetaan lista henkilöistä
+  const PersonList = ({ persons, filter }) => {
 
-const List = ({ persons, filter, removePerson }) => {
     return (
-        <div>
-            {persons.map(person => <Person key={person.name} person={person} removePerson={removePerson}/>)
-                    .filter(row => row.key.toUpperCase().includes(filter.toUpperCase()))}   
-        </div>
+      <div>
+        {persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase()))
+                .map(person=> <Person key={person.name} person={person}/>)  
+        }
+      </div>
     )
-}
+  }
 
-export default List
+export default PersonList

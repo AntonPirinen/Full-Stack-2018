@@ -41,15 +41,15 @@ const App = () => {
         nimi: 'Half Stack -sovelluskehitys',
         osat: [
           {
-            nimi: 'Reactin perusteet',
+            nimi: 'Fundamentals of React',
             tehtavia: 10
           },
           {
-            nimi: 'Tiedonvälitys propseilla',
+            nimi: 'Using props to pass data',
             tehtavia: 7
           },
           {
-            nimi: 'Komponenttien tila',
+            nimi: 'State of a component',
             tehtavia: 14
           }
         ]

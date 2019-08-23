@@ -3,12 +3,12 @@ import Person from './Person'
  
  
  // muodostetaan lista henkilöistä
-  const PersonList = ({ persons, filter }) => {
+  const PersonList = ({ persons, filter, remove }) => {
 
     return (
       <div>
         {persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase()))
-                .map(person=> <Person key={person.name} person={person}/>)  
+                .map(person=> <Person key={person.name} remove={remove} person={person}/>)  
         }
       </div>
     )

@@ -1,10 +1,13 @@
 import React from 'react'
-//import DeleteButton from './DeleteButton'
 
-const Person = ({ person }) => {
+const Person = ({ person, remove }) => {
+    
     return (
         <div>
-            <div> {person.name} {person.number}</div>   
+            <div>
+                {person.name} {person.number}
+                <button onClick={() => remove(person.id)}>delete</button>
+            </div>   
          </div>
     )
 }
